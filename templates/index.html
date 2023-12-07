@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Image Classifier</title>
+    <link rel='stylesheet' href={{url_for('static' , filename = 'css/style.css')}}>
+</head>
+<body>
+    <h1>IMAGE CLASSIFIER</h1>
+    <div class="container">
+        <form action="/success" method="post" enctype="multipart/form-data" class="file-input">
+            <input type="file" name="file" id="file" onchange="previewImage()"/>
+            <input type="submit" class="upload-button" value="Upload"/>
+        </form>
+        <div id="imagePreview">
+            <img src="#" alt="Selected Image">
+        </div>
+        
+        <!-- Add input field for image URLs -->
+        <div class="upload-link">
+            <form class="link-form" action="/success" method="post" enctype="multipart/form-data">
+                <input class="link-form-input" type="text" maxlength="1000" name="link" placeholder="Paste the image URL (not the site address)"/>
+                <button class="proceed-button">Proceed</button>
+            </form>
+        </div>
+        
+        <p class="footer-text"></p>
+    </div>
+
+    <script>
+        function previewImage() {
+            const fileInput = document.getElementById('file');
+            const imagePreview = document.getElementById('imagePreview');
+            const img = imagePreview.querySelector('img');
+
+            const selectedFile = fileInput.files[0];
+
+            if (selectedFile) {
+                const reader = new FileReader();
+                reader.onload = function (e) {
+                    img.src = e.target.result;
+                    img.style.display = 'block';
+                };
+                reader.readAsDataURL(selectedFile);
+            } else {
+                img.style.display = 'none';
+                img.src = '#';
+            }
+        }
+    </script>
+</body>
+</html>
